@@ -4,6 +4,7 @@ import {
   Heading,
   Icon
 } from '@chakra-ui/react'
+import Link from 'next/link'
 import { RiAddLine } from 'react-icons/ri'
 
 export function HeaderUsers () {
@@ -15,6 +16,7 @@ export function HeaderUsers () {
     >
       <Heading size="lg" fontWeight="normal">Usuários</Heading>
 
+    <Link href="/users/create">
       <Button
         as="a"
         size="sm"
@@ -23,6 +25,7 @@ export function HeaderUsers () {
       >
         Criar novo usuário
       </Button>
+    </Link>
     </Flex>
   )
 }

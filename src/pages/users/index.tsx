@@ -5,7 +5,7 @@ import {
 
 import { Header } from '../../components/Header'
 import { Pagination } from '../../components/Pagination'
-import { SideBar } from '../../components/SideBar'
+import { Sidebar } from '../../components/Sidebar'
 import { HeaderUsers } from '../../components/Users/HeaderUsers'
 import { TableUsers } from '../../components/Users/TableUsers'
 
@@ -17,11 +17,11 @@ export default function UserList () {
       <Flex
         w="100%"
         my="6"
-        maxWidth={1480}
+        maxWidth={1400}
         mx="auto"
         px="6"
       >
-        <SideBar />
+        <Sidebar />
 
         <Box
           flex="1"

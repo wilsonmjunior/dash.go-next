@@ -60,7 +60,7 @@ interface ChartBoxProps {
 export function ChartBox ({ title }: ChartBoxProps) {
   return (
     <Box
-      p="8"
+      p={['6', '8']}
       bg="gray.800"
       borderRadius={8}
       pb="4"

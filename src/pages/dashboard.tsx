@@ -1,6 +1,6 @@
 import { Flex, SimpleGrid } from '@chakra-ui/react'
 
-import { SideBar } from '../components/SideBar'
+import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { ChartBox } from '../components/ChartBox'
 
@@ -18,7 +18,7 @@ export default function Dashboard () {
         paddingX="6"
         maxWidth={1400}
       >
-        <SideBar />
+        <Sidebar />
         <SimpleGrid
           flex="1"
           gap="4"
