@@ -1,11 +1,11 @@
-import { Button } from "@chakra-ui/button";
-import { Box, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from "@chakra-ui/layout";
-import { Input } from "../../components/Form/Input";
+import { Button } from '@chakra-ui/button'
+import { Box, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/layout'
 
-import { Header } from "../../components/Header";
-import { SideBar } from "../../components/SideBar";
+import { Input } from '../../components/Form/Input'
+import { Header } from '../../components/Header'
+import { SideBar } from '../../components/SideBar'
 
-export default function CreateUser() {
+export default function CreateUser () {
   return (
     <Box>
       <Header />
