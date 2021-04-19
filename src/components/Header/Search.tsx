@@ -1,7 +1,14 @@
+import { useRef } from 'react'
 import { Flex, Icon, Input } from '@chakra-ui/react'
 import { RiSearchLine } from 'react-icons/ri'
 
+// controlled components - useState - busca usar debounce
 export function Search () {
+  // uncontrolled components
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  // searchInputRef.current.focus() - (Imperativa)
+
   return (
     <Flex
       as="label"
@@ -18,6 +25,7 @@ export function Search () {
       borderRadius="full"
     >
       <Input
+        ref={searchInputRef} // uncontrolled
         color="gray.50"
         variant="unstyled"
         px="4"
