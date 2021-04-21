@@ -1,7 +1,12 @@
 import {
   Box,
-  Flex
+  Flex,
+  Spinner,
+  Text
 } from '@chakra-ui/react'
+import { useQuery } from 'react-query'
+
+import { api } from '../../services/api'
 
 import { Header } from '../../components/Header'
 import { Pagination } from '../../components/Pagination'
@@ -10,6 +15,25 @@ import { HeaderUsers } from '../../components/Users/HeaderUsers'
 import { TableUsers } from '../../components/Users/TableUsers'
 
 export default function UserList () {
+  const { isLoading, data, isFetching, refetch ,error } = useQuery('users', async () => {
+    const { data } = await api.get('users')
+
+    const users = data.users.map(user => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR',{
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      }),
+    }))
+
+    return users
+  }, {
+    staleTime: 1000 * 6,
+  })
+
   return (
     <Box>
       <Header />
@@ -29,9 +53,30 @@ export default function UserList () {
           bg="gray.800"
           p="8"
         >
-          <HeaderUsers />
+          <HeaderUsers
+            loading={!isLoading && isFetching} 
+            refetch={refetch} 
+          />
 
-          <TableUsers />
+          {isLoading
+            ? (
+              <Flex justify="center">
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="md"
+                />
+              </Flex>
+            ) : error ? (
+              <Flex>
+                <Text>Falha ao obter dados</Text>
+              </Flex>
+            ) : (
+              <TableUsers users={data} />
+            )
+          }
 
           <Pagination />
         </Box>

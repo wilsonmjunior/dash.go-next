@@ -24,7 +24,7 @@ export function Profile ({ showProfileData = true }: ProfileProps) {
       <Avatar
         size="md"
         name="Wilson Matokanovic"
-        src="https://avatars.githubusercontent.com/u/11083214?v=4"
+        // src="https://avatars.githubusercontent.com/u/11083214?v=4"
       />
     </Flex>
   )
