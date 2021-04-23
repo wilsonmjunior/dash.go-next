@@ -10,22 +10,19 @@ import {
   Th,
   Thead,
   Tr,
-  useBreakpointValue
+  useBreakpointValue,
+  Link
 } from '@chakra-ui/react'
 import { RiPencilLine } from 'react-icons/ri'
 
-interface User {
-  id: number
-  name: string
-  email: string
-  createdAt: string
-}
+import { User } from '../../services/hooks/useUsers'
 
 interface TableUsersProps {
   users: User[]
+  onPrefetchUser: (userId: string) => void
 }
 
-export function TableUsers ({ users }: TableUsersProps) {
+export function TableUsers ({ users, onPrefetchUser }: TableUsersProps) {
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true
@@ -52,7 +49,9 @@ export function TableUsers ({ users }: TableUsersProps) {
               </Td>
               <Td>
                 <Box>
-                  <Text fontWeight="bold">{user.name}</Text>
+                  <Link color="purple.400" onMouseEnter={() => onPrefetchUser(user.id)}>
+                    <Text fontWeight="bold">{user.name}</Text>
+                  </Link>
                   <Text fontSize="sm" color="gray.300">{user.email}</Text>
                 </Box>
               </Td>

@@ -4,35 +4,30 @@ import {
   Spinner,
   Text
 } from '@chakra-ui/react'
-import { useQuery } from 'react-query'
-
-import { api } from '../../services/api'
+import { useState } from 'react'
 
 import { Header } from '../../components/Header'
 import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
 import { HeaderUsers } from '../../components/Users/HeaderUsers'
 import { TableUsers } from '../../components/Users/TableUsers'
+import { api } from '../../services/api'
+import { useUsers } from '../../services/hooks/useUsers'
+import { queryClient } from '../../services/queryClient'
 
 export default function UserList () {
-  const { isLoading, data, isFetching, refetch ,error } = useQuery('users', async () => {
-    const { data } = await api.get('users')
+  const [page, setPage] = useState(1)
+  const { isLoading, data, isFetching, refetch, error } = useUsers(page)
 
-    const users = data.users.map(user => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR',{
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      }),
-    }))
+  async function handlePrefetchUser(userId: string) {
+    await queryClient.prefetchQuery(['user', userId], async () => {
+      const response = await api.get(`users/${userId}`)
 
-    return users
-  }, {
-    staleTime: 1000 * 6,
-  })
+      return response.data
+    }, {
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    })
+  }
 
   return (
     <Box>
@@ -74,11 +69,15 @@ export default function UserList () {
                 <Text>Falha ao obter dados</Text>
               </Flex>
             ) : (
-              <TableUsers users={data} />
+              <TableUsers users={data.users} onPrefetchUser={handlePrefetchUser} />
             )
           }
 
-          <Pagination />
+          <Pagination 
+            totalCountOfRegisters={data?.totalCount}
+            currentPage={page}
+            onPageChange={setPage}
+          />
         </Box>
       </Flex>
     </Box>
